@@ -9,25 +9,21 @@
 *This is module I guess
 */
 (function () {
+  // *Initialize GameBoard
   let GameBoard = {
-    _board : new Array(9),
+    _board : ['X','O','X','O','O','X','O','X','O'],
   }
+  // *Display elements, accessed from array
   const Buttons = document.querySelectorAll("button");
   function displayController(){
     for(let i=0; i<=8; i++){
-      GameBoard._board[i] = i;
       Buttons[i].textContent = GameBoard._board[i];
     }
     console.log(GameBoard._board);
   }
+
   displayController();
 }())
-
-// *Game Board
-
-
-
-
 
 /*
 *Create Player using Factory Functions
