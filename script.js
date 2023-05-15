@@ -8,33 +8,39 @@
 /*
 *This is module I guess
 */
-(function(){
-  let gameBoard = new Array(9);
-  
-  let gameBoardLength = function(){
-    let message = "The length of gameBoard is " + gameBoard.length;
-    console.log(message);
+(function () {
+  let GameBoard = {
+    _board : new Array(9),
   }
-  function iterateArray(){
-    for (let i=0; i<=8; i++){
-      gameBoard[i] = prompt("enter 'x' or 'y'");
+  const Buttons = document.querySelectorAll("button");
+  function displayController(){
+    for(let i=0; i<=8; i++){
+      GameBoard._board[i] = i;
+      Buttons[i].textContent = GameBoard._board[i];
     }
-    return gameBoard;
+    console.log(GameBoard._board);
   }
-
+  displayController();
 }())
+
+// *Game Board
+
+
+
 
 
 /*
 *Create Player using Factory Functions
 */
 
-function createPlayers(name,marker){
-  return{
-    playerName : name,
-    playerMarker : marker,
+function createPlayers(name, marker) {
+  return {
+    playerName: prompt("What is your name?"),
+    playerMarker: prompt("choose your marker 'x' or 'o' "),
+    
   }
 }
+
 
 
 

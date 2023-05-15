@@ -34,10 +34,13 @@ header{
 }
 button{
   background-color: var(--color-violet);
-  padding: 4rem;
+  padding:2rem;
+  height: 150px;
+  width: 150px;
   font-size: 3.5rem;
   border:none;
-  
+  color: var(--color-white);
+  font-weight: 400;
 }
 
 .table{
