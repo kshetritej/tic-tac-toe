@@ -11,7 +11,7 @@
 (function () {
   // *Initialize GameBoard
   let GameBoard = {
-    _board : ['X','O','X','O','O','X','O','X','O'],
+    _board : ['X','O','X','O','O','X','O','X'],
   }
   // *Display elements, accessed from array
   const Buttons = document.querySelectorAll("button");
@@ -21,8 +21,35 @@
     }
     console.log(GameBoard._board);
   }
-
   displayController();
+
+  // * Function to add Marker
+  function addMark(){
+    for(let i=0; i<9; i++){
+      Buttons[i].addEventListener("click",()=>{
+        /*
+          * Logic to stop players playing in already taken spot
+        */
+        if(Buttons[i].textContent !==""){
+          alert("Already marked");
+        }
+        else{
+          GameBoard._board[i] = "X";
+          Buttons[i].textContent = "X";
+        }
+        console.log(i,GameBoard._board);
+      })
+    }
+  }
+  addMark();
+
+  /*
+    * Check for Game Over or Play on
+  */
+ function gamePlay(){
+  
+ }
+
 }())
 
 /*
