@@ -11,7 +11,7 @@
 (function () {
   // *Initialize GameBoard
   let GameBoard = {
-    _board: ['', '', '', '', '', '', '', '', ''],
+    _board: new Array(9),
   }
   // *Display elements, accessed from array
   const Buttons = document.querySelectorAll("button");
@@ -35,7 +35,6 @@
         */
         if (Buttons[i].textContent !== "") {
           alert("Already marked");
-          checkForGameOver();
         }
         else {
           /**
@@ -45,24 +44,22 @@
             GameBoard._board[i] = player2;
             Buttons[i].textContent = player2;
             turnCount++;
-            checkForGameOver();
           }
           else{
             if(turnCount%2 === 0){
               GameBoard._board[i] = player1;
               Buttons[i].textContent = player1;
               turnCount++;
-              checkForGameOver();
             }
             else{
               GameBoard._board[i] = player2;
               Buttons[i].textContent = player2;
               turnCount++;
-              checkForGameOver();
             }
           }
         }
-        console.log(i, GameBoard._board);
+        console.log(GameBoard._board);
+        checkForGameOver();
       })
     }
   }
@@ -81,20 +78,32 @@
     let value6 = GameBoard._board[6];
     let value7 = GameBoard._board[7];
     let value8 = GameBoard._board[8];
+    
 
-    if (value0 === value1 && value1 === value2 ||
-      value3 === value4 && value4 === value5 ||
-      value6 === value7 && value7 === value8 || // Checked for rows
-      value0 === value3 && value3 === value6 ||
-      value1 === value4 && value4 === value7 ||
-      value2 === value5 && value5 === value8 || // checked for columns
-      value0 === value4 && value4 === value8 ||
-      value2 === value4 && value4 === value6    // Checked for Diagonals
+    if (((value0=== value1 && value1 === value2)||
+      (value3 === value4 && value4 === value5 )||
+      (value6 === value7 && value7 === value8) || // Checked for rows
+      (value0 === value3 && value3 === value6) ||
+      (value1 === value4 && value4 === value7) ||
+      (value2 === value5 && value5 === value8) || // checked for columns
+      (value0 === value4 && value4 === value8) ||
+      (value2 === value4 && value4 === value6) === "X")   // Checked for Diagonals
+      // *This modification taught me importance of knowing precendance 
     ) {
-      console.log("Game over");
+      console.log("X Wons");
+    }
+    else if(((value0=== value1 && value1 === value2)||
+    (value3 === value4 && value4 === value5 )||
+    (value6 === value7 && value7 === value8) || // Checked for rows
+    (value0 === value3 && value3 === value6) ||
+    (value1 === value4 && value4 === value7) ||
+    (value2 === value5 && value5 === value8) || // checked for columns
+    (value0 === value4 && value4 === value8) ||
+    (value2 === value4 && value4 === value6) === "O")){
+      console.log("O won")
     }
     else {
-      if (GameBoard._board.includes(undefined)) {
+      if (GameBoard._board.includes(false)) {
         console.log("Play on");
       }
       else {
