@@ -11,7 +11,7 @@
 (function () {
   // *Initialize GameBoard
   let GameBoard = {
-    _board: ['X', 'O', 'X', 'O', 'O', 'X', 'O', 'X', undefined],
+    _board: ['', '', '', '', '', '', '', '', ''],
   }
   // *Display elements, accessed from array
   const Buttons = document.querySelectorAll("button");
@@ -19,13 +19,16 @@
     for (let i = 0; i <= 8; i++) {
       Buttons[i].textContent = GameBoard._board[i];
     }
-    console.log(GameBoard._board);
   }
   displayController();
 
   // * Function to add Marker
   function addMark() {
-    for (let i = 0; i < 9; i++) {
+    let player1 = 'X';
+    let player2 = 'O';
+    // let currentPlayer = player1; May need later .
+    let turnCount = 0;
+    for (let i = 0; i < GameBoard._board.length; i++) {
       Buttons[i].addEventListener("click", () => {
         /*
           * Logic to stop players playing in already taken spot
@@ -33,12 +36,31 @@
         if (Buttons[i].textContent !== "") {
           alert("Already marked");
           checkForGameOver();
-
         }
         else {
-          GameBoard._board[i] = "X";
-          Buttons[i].textContent = "X";
-         checkForGameOver();
+          /**
+           * Logic to switch turns;
+           */
+          if(turnCount === 1){
+            GameBoard._board[i] = player2;
+            Buttons[i].textContent = player2;
+            turnCount++;
+            checkForGameOver();
+          }
+          else{
+            if(turnCount%2 === 0){
+              GameBoard._board[i] = player1;
+              Buttons[i].textContent = player1;
+              turnCount++;
+              checkForGameOver();
+            }
+            else{
+              GameBoard._board[i] = player2;
+              Buttons[i].textContent = player2;
+              turnCount++;
+              checkForGameOver();
+            }
+          }
         }
         console.log(i, GameBoard._board);
       })
@@ -69,12 +91,11 @@
       value0 === value4 && value4 === value8 ||
       value2 === value4 && value4 === value6    // Checked for Diagonals
     ) {
-      console.log("Game Over");
+      console.log("Game over");
     }
     else {
       if (GameBoard._board.includes(undefined)) {
         console.log("Play on");
-
       }
       else {
         console.log("Draw")
@@ -95,16 +116,4 @@ function createPlayers(name, marker) {
 
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
