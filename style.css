@@ -31,6 +31,14 @@ header{
   align-items: center;
   font-size: 3rem;
   color: var(--color-white);
+  height: 10vh;
+}
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
 }
 button{
   background-color: var(--color-violet);
@@ -49,7 +57,6 @@ button{
   align-items: center;
   padding: 1rem;
   justify-self: center;
-  height: 80vh;
 }
 table{
   border-collapse: collapse;
@@ -68,4 +75,29 @@ footer{
   font-weight: 600;
   margin-top: auto;
   justify-self: flex-end;
+  height: 10vh;
+}
+
+/*
+  *result container styling 
+*/
+.result-container{
+  background-color: var(--color-light-violet);
+  padding: 1rem;
+  font-size: 1.5rem;
+  width: 100%;
+  border-radius: 10px;
+  display: none;
+}
+
+/* Restart Button style */
+.btn{
+  display: block;
+  background-color: var(--color-light-violet);
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  height: auto;
+  width: auto;
+  border-radius: 10px;
+  display: none;
 }
