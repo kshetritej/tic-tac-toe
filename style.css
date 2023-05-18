@@ -42,13 +42,19 @@ main{
 }
 button{
   background-color: var(--color-violet);
-  padding:2rem;
+  padding:0.5rem;
   height: 150px;
   width: 150px;
   font-size: 3.5rem;
   border:none;
   color: var(--color-white);
   font-weight: 400;
+}
+@media screen and (max-width:420px) {
+  button{
+    height: 100px;
+    width: 100px;
+  }
 }
 
 .table{
