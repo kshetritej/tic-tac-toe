@@ -81,7 +81,7 @@ footer{
   font-weight: 600;
   margin-top: auto;
   justify-self: flex-end;
-  height: 10vh;
+  height: 8vh;
 }
 
 /*
@@ -92,8 +92,10 @@ footer{
   padding: 1rem;
   font-size: 1.5rem;
   width: 100%;
+  height: 10%;
   border-radius: 10px;
-  display: none;
+  color: var(--color-white);
+  text-align: center;
 }
 
 /* Restart Button style */
@@ -106,4 +108,8 @@ footer{
   width: auto;
   border-radius: 10px;
   display: none;
+}
+/* github logo */
+.uil-github{
+  font-size: 2rem;
 }

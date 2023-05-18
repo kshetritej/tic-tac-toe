@@ -1,128 +1,104 @@
+// Game module
+const gameModule = (() => {
+  // Game board
+  let board = ["", "", "", "", "", "", "", "", ""];
 
-/*
-  0 1 2
-  3 4 5
-  6 7 8
-*/
+  // Players
+  const player1 = createPlayer("Player 1", "X");
+  const player2 = createPlayer("Player 2", "O");
+  let currentPlayer = player1;
 
-/*
-*This is module I guess
-*/
-(function () {
-  // *Initialize GameBoard
-  let GameBoard = {
-    _board: new Array(9),
-  }
-  // *Display elements, accessed from array
-  const Buttons = document.querySelectorAll("button");
-  function displayController() {
-    for (let i = 0; i <= 8; i++) {
-      Buttons[i].textContent = GameBoard._board[i];
-    }
-  }
-  displayController();
+  // Game status
+  let gameOver = false;
 
-  // * Function to add Marker
-  function addMark() {
-    let player1 = 'X';
-    let player2 = 'O';
-    // let currentPlayer = player1; May need later .
-    let turnCount = 0;
-    for (let i = 0; i < GameBoard._board.length; i++) {
-      Buttons[i].addEventListener("click", () => {
-        /*
-          * Logic to stop players playing in already taken spot
-        */
-        if (Buttons[i].textContent !== "") {
-          alert("Already marked");
-        }
-        else {
-          /**
-           * Logic to switch turns;
-           */
-          if(turnCount === 1){
-            GameBoard._board[i] = player2;
-            Buttons[i].textContent = player2;
-            turnCount++;
-          }
-          else{
-            if(turnCount%2 === 0){
-              GameBoard._board[i] = player1;
-              Buttons[i].textContent = player1;
-              turnCount++;
-            }
-            else{
-              GameBoard._board[i] = player2;
-              Buttons[i].textContent = player2;
-              turnCount++;
-            }
-          }
-        }
-        console.log(GameBoard._board);
-        checkForGameOver();
-      })
-    }
-  }
-  addMark();
+  // DOM elements
+  const buttons = document.querySelectorAll("button");
+  const resultBoard = document.querySelector(".result-container");
+  const restartBtn = document.querySelector(".btn");
 
-  /*
-    * Check for Game Over or Play on
-  */
-  function checkForGameOver() {
-    let value0 = GameBoard._board[0];
-    let value1 = GameBoard._board[1];
-    let value2 = GameBoard._board[2];
-    let value3 = GameBoard._board[3];
-    let value4 = GameBoard._board[4];
-    let value5 = GameBoard._board[5];
-    let value6 = GameBoard._board[6];
-    let value7 = GameBoard._board[7];
-    let value8 = GameBoard._board[8];
-    
-
-    if (((value0=== value1 && value1 === value2)||
-      (value3 === value4 && value4 === value5 )||
-      (value6 === value7 && value7 === value8) || // Checked for rows
-      (value0 === value3 && value3 === value6) ||
-      (value1 === value4 && value4 === value7) ||
-      (value2 === value5 && value5 === value8) || // checked for columns
-      (value0 === value4 && value4 === value8) ||
-      (value2 === value4 && value4 === value6) === "X")   // Checked for Diagonals
-      // *This modification taught me importance of knowing precendance 
-    ) {
-      console.log("X Wons");
-    }
-    else if(((value0=== value1 && value1 === value2)||
-    (value3 === value4 && value4 === value5 )||
-    (value6 === value7 && value7 === value8) || // Checked for rows
-    (value0 === value3 && value3 === value6) ||
-    (value1 === value4 && value4 === value7) ||
-    (value2 === value5 && value5 === value8) || // checked for columns
-    (value0 === value4 && value4 === value8) ||
-    (value2 === value4 && value4 === value6) === "O")){
-      console.log("O won")
-    }
-    else {
-      if (GameBoard._board.includes(false)) {
-        console.log("Play on");
+  // Event listeners for button clicks
+  buttons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      if (!gameOver && board[index] === "") {
+        makeMove(index);
       }
-      else {
-        console.log("Draw")
+    });
+  });
+
+  // Make a move
+  function makeMove(index) {
+    board[index] = currentPlayer.marker;
+    buttons[index].textContent = currentPlayer.marker;
+
+    if (checkForWin()) {
+      gameOver = true;
+      resultBoard.textContent = `${currentPlayer.marker} wins!`;
+      restartBtn.style.display = "block";
+    } else if (checkForDraw()) {
+      gameOver = true;
+      resultBoard.textContent = "Draw";
+      restartBtn.style.display = "block";
+    } else {
+      currentPlayer = currentPlayer === player1 ? player2 : player1;
+    }
+  }
+
+  // Check for a win
+  function checkForWin() {
+    const winningCombinations = [
+      // Rows
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      // Columns
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      // Diagonals
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+
+    for (const combination of winningCombinations) {
+      const [a, b, c] = combination;
+      if (
+        board[a] !== "" &&
+        board[a] === board[b] &&
+        board[b] === board[c]
+      ) {
+        return true;
       }
     }
+
+    return false;
   }
 
-}())
+  // Check for a draw
+  function checkForDraw() {
+    return board.every(cell => cell !== "");
+  }
 
-/*
-*Create Player using Factory Functions
-*/
+  // Restart the game
+  function restartGame() {
+    board = ["", "", "", "", "", "", "", "", ""];
+    currentPlayer = player1;
+    gameOver = false;
+    buttons.forEach(button => (button.textContent = ""));
+    resultBoard.textContent = "";
+    restartBtn.style.display = "none";
+  }
 
-function createPlayers(name, marker) {
+  // Player factory function
+  function createPlayer(name, marker) {
+    return { name, marker };
+  }
+
+  // Public API
   return {
-    playerName: prompt("What is your name?"),
-    playerMarker: prompt("choose your marker 'x' or 'o' "),
+    restartGame
+  };
+})();
 
-  }
-}
-
+// Restart button event listener
+const restartBtn = document.querySelector(".btn");
+restartBtn.addEventListener("click", gameModule.restartGame);
